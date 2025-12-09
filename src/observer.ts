@@ -33,6 +33,19 @@ export class Observer {
     return this.listeners.get(id)
   }
 
+  getListenersByEvent(event: ListenerEvent) {
+    const listenersId = this.getListenersIdByEvent(event)
+    const listeners = []
+
+    for (const id of listenersId) {
+      const listener = this.listeners.get(id)!
+
+      listeners.push(listener)
+    }
+
+    return listeners
+  }
+
   protected getListenersIdByEvent(event: ListenerEvent) {
     let listenersId = this.listenersId.get(event)
 
