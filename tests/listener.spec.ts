@@ -34,7 +34,26 @@ describe('Listener', () => {
     expect(listener1.event).toBe('event')
     expect(listener2.event).toBe('event')
 
-    expect(listener2.id).not.toBe(listener1.id)
+    expect(listener1.id).not.toBe(listener2.id)
+  })
+
+  test('It is expected that two listeners will be registered for different events', () => {
+    observer.on('event-1', () => { })
+    observer.on('event-2', () => { })
+
+    const listeners1 = observer.getListenersByEvent('event-1')
+    const listeners2 = observer.getListenersByEvent('event-2')
+
+    const [listener1] = listeners1
+    const [listener2] = listeners2
+
+    expect(listeners1.length).toBe(1)
+    expect(listeners2.length).toBe(1)
+
+    expect(listener1.event).toBe('event-1')
+    expect(listener2.event).toBe('event-2')
+
+    expect(listener1.id).not.toBe(listener2.id)
   })
 
   test('The registered listener is expected to be called', () => {
