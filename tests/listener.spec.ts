@@ -89,4 +89,17 @@ describe('Listener', () => {
     expect(handler1).toHaveBeenCalledWith('Hello World')
     expect(handler2).toHaveBeenCalledWith('Hello World')
   })
+
+  test('It is expected that only the listeners of the triggered event will be called', () => {
+    const handler1 = vi.fn(arg => { })
+    const handler2 = vi.fn(arg => { })
+
+    observer.on('event-1', handler1 as any)
+    observer.on('event-2', handler2 as any)
+
+    observer.emit('event-1', 'Hello World')
+
+    expect(handler1).toHaveBeenCalledWith('Hello World')
+    expect(handler2).not.toBeCalled()
+  })
 })
