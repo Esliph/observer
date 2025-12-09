@@ -21,6 +21,22 @@ describe('Listener', () => {
     expect(typeof listener.handler).toBe('function')
   })
 
+  test('It is expected that two listeners will be registered for the same event', () => {
+    observer.on('event', () => { })
+    observer.on('event', () => { })
+
+    const listeners = observer.getListenersByEvent('event')
+
+    const [listener1, listener2] = listeners
+
+    expect(listeners.length).toBe(2)
+
+    expect(listener1.event).toBe('event')
+    expect(listener2.event).toBe('event')
+
+    expect(listener2.id).not.toBe(listener1.id)
+  })
+
   test('The registered listener is expected to be called', () => {
     const handler = vi.fn(() => { })
 
