@@ -102,4 +102,17 @@ describe('Listener', () => {
     expect(handler1).toHaveBeenCalledWith('Hello World')
     expect(handler2).not.toBeCalled()
   })
+
+  test('It is expected that no listeners will be called when there are no registered listeners for the triggered event', () => {
+    const handler1 = vi.fn(arg => { })
+    const handler2 = vi.fn(arg => { })
+
+    observer.on('event-1', handler1 as any)
+    observer.on('event-2', handler2 as any)
+
+    observer.emit('event-3', 'Hello World')
+
+    expect(handler1).not.toBeCalled()
+    expect(handler2).not.toBeCalled()
+  })
 })
