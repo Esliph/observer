@@ -76,4 +76,17 @@ describe('Listener', () => {
 
     expect(handler).toHaveBeenCalledWith('Hello World')
   })
+
+  test('It is expected that the data transmitted in the broadcast will be passed on to the listeners', () => {
+    const handler1 = vi.fn(arg => { })
+    const handler2 = vi.fn(arg => { })
+
+    observer.on('event', handler1 as any)
+    observer.on('event', handler2 as any)
+
+    observer.emit('event', 'Hello World')
+
+    expect(handler1).toHaveBeenCalledWith('Hello World')
+    expect(handler2).toHaveBeenCalledWith('Hello World')
+  })
 })
