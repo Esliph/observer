@@ -19,6 +19,16 @@ export class Observer {
     return id
   }
 
+  emit(event: ListenerEvent, data: unknown) {
+    const listenersId = this.getListenersIdByEvent(event)
+
+    for (const id of listenersId) {
+      const listener = this.listeners.get(id)!
+
+      listener.handler(data)
+    }
+  }
+
   getListener(id: ListenerId) {
     return this.listeners.get(id)
   }
